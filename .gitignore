@@ -5,6 +5,12 @@
 /.pnp
 .pnp.js
 
+# Dev dependencies
+/dev
+.env.local
+.env.development.local
+.env.test.local
+
 # testing
 /coverage
 
