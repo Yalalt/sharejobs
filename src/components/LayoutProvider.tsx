@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from 'react';
 import { ConfigProvider, message } from 'antd';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { SetCurrentUser } from '@/redux/usersSlice';
@@ -9,11 +9,13 @@ import Loader from './Loader';
 import { SetLoading } from '@/redux/loadersSlice';
 
 function LayoutProvider({ children }: { children: React.ReactNode }) {
+  const dispatch = useDispatch();
+  const pathName = usePathname();
+  const router = useRouter();
   const { currentUser } = useSelector((state: any) => state.users);
   const { loading } = useSelector((state: any) => state.loaders);
-  const dispatch = useDispatch();
-
   const [isSidebarExpanded, setIsSidebarExpanded] = React.useState<boolean>(true);
+
 
   const menuItems = [
     {
@@ -42,7 +44,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       icon: 'ri-save-line',
     },
   ];
-  const pathName = usePathname();
+
 
   const getCurrentUser = async () => {
     try {
@@ -51,7 +53,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       dispatch(SetCurrentUser(response.data.data));
 
     } catch (error: any) {
-      message.error(error.response.data.message || error.message || "Something went wrong");
+      message.error(error.response.data.message || "Something went wrong");
     } finally {
       dispatch(SetLoading(false));
     }
@@ -64,6 +66,21 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       getCurrentUser();
     }
   }, [pathName]);
+
+  const onLogout = async () => {
+    try {
+      dispatch(SetLoading(true));
+      await axios.post('/api/users/logout');
+      message.success('Logout successfully');
+      
+      dispatch(SetCurrentUser(null));
+      router.push('/login');
+    } catch (error: any) {
+      message.error(error.response.data.message || "Something went wrong");
+    }  finally {
+      dispatch(SetLoading(false));
+    }
+  }
 
   return (
     <html lang='en'>
@@ -122,7 +139,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                       <span>{currentUser?.email}</span>
                     </div>
                   )}
-                  <i className='ri-logout-box-line'></i>
+                  <i className='ri-logout-box-line' onClick={onLogout}></i>
                 </div>
               </div>
               <div className='body'>{children}</div>
