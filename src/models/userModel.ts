@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    phone: {
+      type: String,
+      required: false,
+    },
     password: {
       type: String,
       required: [true, 'Please enter your password'],
@@ -26,6 +30,46 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
       default: false,
+    },
+
+    // Add fields for employee
+    skills: {
+      type: [],
+      required: false,
+    },
+    experience: {
+      type: [],
+      required: false,
+    },
+    educations: {
+      type: [],
+      required: false,
+    },
+    carrierObjective: {
+      type: String,
+      required: false,
+    },
+
+    // Employer fields
+    establishmentYear: {
+      type: String,
+      required: false,
+    },
+    companySize: {
+      type: String,
+      required: false,
+    },
+    website: {
+      type: String,
+      required: false,
+    },
+    about: {
+      type: String,
+      required: false,
+    },
+    address: {
+      type: String,
+      required: false,
     },
   },
   {

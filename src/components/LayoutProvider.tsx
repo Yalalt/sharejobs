@@ -16,7 +16,6 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   const { loading } = useSelector((state: any) => state.loaders);
   const [isSidebarExpanded, setIsSidebarExpanded] = React.useState<boolean>(true);
 
-
   const menuItems = [
     {
       name: 'Home',
@@ -45,24 +44,22 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
     },
   ];
 
-
   const getCurrentUser = async () => {
     try {
       dispatch(SetLoading(true));
       const response = await axios.get('/api/users/currentuser');
       dispatch(SetCurrentUser(response.data.data));
-
     } catch (error: any) {
-      message.error(error.response.data.message || "Something went wrong");
+      message.error(error.response.data.message || 'Something went wrong');
     } finally {
       dispatch(SetLoading(false));
     }
-  }
+  };
 
   // Login and register page dont need to get current user
   // also loading to display loader component
   useEffect(() => {
-    if (pathName !== '/login' && pathName !== '/register') {
+    if (pathName !== '/login' && pathName !== '/register' && !currentUser) {
       getCurrentUser();
     }
   }, [pathName]);
@@ -72,15 +69,15 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       dispatch(SetLoading(true));
       await axios.post('/api/users/logout');
       message.success('Logout successfully');
-      
+
       dispatch(SetCurrentUser(null));
       router.push('/login');
     } catch (error: any) {
-      message.error(error.response.data.message || "Something went wrong");
-    }  finally {
+      message.error(error.response.data.message || 'Something went wrong');
+    } finally {
       dispatch(SetLoading(false));
     }
-  }
+  };
 
   return (
     <html lang='en'>
@@ -95,55 +92,57 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
             },
           }}
         >
-
-         {loading && <Loader />}
+          {loading && <Loader />}
 
           {/* if route is login or register, dont show layout */}
 
           {pathName === '/login' || pathName === '/register' ? (
             <div>{children}</div>
           ) : (
-            <div className='layout-parent'>
-              <div className='sidebar'>
-                <div className='logo'>
-                  {isSidebarExpanded && <h1>SHAREJOBS</h1>}
+            currentUser && (
+              <div className='layout-parent'>
+                <div className='sidebar'>
+                  <div className='logo'>
+                    {isSidebarExpanded && <h1>SHAREJOBS</h1>}
 
-                  {!isSidebarExpanded && (
-                    <i className='ri-menu-2-line' onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}></i>
-                  )}
-                  {isSidebarExpanded && (
-                    <i className='ri-close-line' onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}></i>
-                  )}
-                </div>
+                    {!isSidebarExpanded && (
+                      <i className='ri-menu-2-line' onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}></i>
+                    )}
+                    {isSidebarExpanded && (
+                      <i className='ri-close-line' onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}></i>
+                    )}
+                  </div>
 
-                <div className='menu-items'>
-                  {menuItems.map((item, index) => {
-                    const isActive = pathName === item.path;
-                    return (
-                      <div
-                        key={index + 'menutem'}
-                        className={`menu-item ${isActive ? 'active-menu-item' : ''}`}
-                        style={{ justifyContent: isSidebarExpanded ? 'flex-start' : 'center' }}
-                      >
-                        <i className={item.icon}></i>
-                        {isSidebarExpanded && <span>{item.name}</span>}
+                  <div className='menu-items'>
+                    {menuItems.map((item, index) => {
+                      const isActive = pathName === item.path;
+                      return (
+                        <div
+                          key={index + 'menutem'}
+                          className={`menu-item ${isActive ? 'active-menu-item' : ''}`}
+                          style={{ justifyContent: isSidebarExpanded ? 'flex-start' : 'center' }}
+                          onClick={() => router.push(item.path)}
+                        >
+                          <i className={item.icon}></i>
+                          {isSidebarExpanded && <span>{item.name}</span>}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className='user-info'>
+                    {isSidebarExpanded && (
+                      <div className='flex flex-col'>
+                        <span>{currentUser?.name}</span>
+                        <span>{currentUser?.email}</span>
                       </div>
-                    );
-                  })}
+                    )}
+                    <i className='ri-logout-box-line' onClick={onLogout}></i>
+                  </div>
                 </div>
-
-                <div className='user-info'>
-                  {isSidebarExpanded && (
-                    <div className='flex flex-col'>
-                      <span>{currentUser?.name}</span>
-                      <span>{currentUser?.email}</span>
-                    </div>
-                  )}
-                  <i className='ri-logout-box-line' onClick={onLogout}></i>
-                </div>
+                <div className='body'>{children}</div>
               </div>
-              <div className='body'>{children}</div>
-            </div>
+            )
           )}
         </ConfigProvider>
       </body>
