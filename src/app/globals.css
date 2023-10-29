@@ -43,3 +43,12 @@ a {
   text-decoration: none;
   color: var(--primary) !important;
 }
+
+.ant-radio-input {
+  accent-color: #232323 !important;
+}
+
+i {
+  font-size: 25px;
+  cursor: pointer;
+}

@@ -1,21 +1,27 @@
 'use client';
+import { SetLoading } from '@/redux/loadersSlice';
 import { Button, Form, Radio, message } from 'antd';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 function Login() {
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const onFinish = async (values: any) => {
     try {
-      const response = await axios.post("/api/users/login", values);
+      dispatch(SetLoading(true));
+      const response = await axios.post('/api/users/login', values);
       message.success(response.data.message);
 
-      router.push("/");
+      router.push('/');
     } catch (error: any) {
-      message.error(error.response.data.message || "Aldaa - Something went wrong.");
+      message.error(error.response.data.message || 'Aldaa - Something went wrong.');
+    } finally {
+      dispatch(SetLoading(false));
     }
   };
 
