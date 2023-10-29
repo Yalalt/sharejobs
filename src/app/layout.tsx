@@ -3,6 +3,7 @@ import './globals.css';
 import '@/stylesheets/commonClasses.css';
 import '@/stylesheets/antdOverride.css';
 import '@/stylesheets/layout.css';
+import ReduxProvider from '@/components/ReduxProvider';
 
 export const metadata = {
   title: 'Share Jobs',
@@ -11,8 +12,8 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <LayoutProvider>
-      {children}
-    </LayoutProvider>
+    <ReduxProvider>
+      <LayoutProvider>{children}</LayoutProvider>
+    </ReduxProvider>
   );
 }
