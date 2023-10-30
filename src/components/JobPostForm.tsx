@@ -22,7 +22,7 @@ const JobPostForm = () => {
       </Col>
 
       <Col span={8}>
-        <Form.Item label='Type' name='type'>
+        <Form.Item label='Type' name='jobType'>
           <select>
             <option value='full-time'>Full Time</option>
             <option value='part-time'>Part Time</option>
