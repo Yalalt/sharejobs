@@ -115,7 +115,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
                   }}
                 >
                   <div className='logo'>
-                    {isSidebarExpanded && <h1>SHEYJOBS</h1>}
+                    {isSidebarExpanded && <h1>SHAREJOBS</h1>}
 
                     {!isSidebarExpanded && (
                       <i className='ri-menu-2-line' onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}></i>
