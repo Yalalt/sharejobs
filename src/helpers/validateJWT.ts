@@ -7,7 +7,7 @@ export const validateJWT = async (request: NextRequest) => {
         const token = request.cookies.get('__session-sharejobs')?.value;
 
         if(!token) {
-            throw new Error('Not authorized');
+            throw new Error('Not authorized. No token found');
         }
 
         const decodedData: any = await jwt.verify(token, process.env.JWT_SECRET!);

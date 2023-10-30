@@ -1,27 +1,28 @@
-'use client';
-import JobPostForm from '@/components/JobPostForm';
-import PageTitle from '@/components/PageTitle';
-import { SetLoading } from '@/redux/loadersSlice';
-import { Button, Form, message } from 'antd';
-import axios from 'axios';
-import { useParams, useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+"use client";
+import React from "react";
+import { useRouter, useParams } from "next/navigation";
+import PageTitle from "@/components/PageTitle";
+import { Button, Form, message } from "antd";
+import JobPostForm from "@/components/JobPostForm";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { SetLoading } from "@/redux/loadersSlice";
 
-const EditJob = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const { jobid } = useParams();
+function EditJob() {
   const [jobData, setJobData] = React.useState<any>(null);
+  const router = useRouter();
+
+  const { jobid } = useParams();
+
+  const dispatch = useDispatch();
 
   const onFinish = async (values: any) => {
     try {
       values._id = jobid;
       dispatch(SetLoading(true));
       const response = await axios.put(`/api/jobs/${jobid}`, values);
-
       message.success(response.data.message);
-      router.push('/jobs');
+      router.push("/jobs");
     } catch (error: any) {
       message.error(error.message);
     } finally {
@@ -29,11 +30,10 @@ const EditJob = () => {
     }
   };
 
-  const fetchJobs = async () => {
+  const fetchJob = async () => {
     try {
       dispatch(SetLoading(true));
       const response = await axios.get(`/api/jobs/${jobid}`);
-
       setJobData(response.data.data);
     } catch (error: any) {
       message.error(error.message);
@@ -42,28 +42,28 @@ const EditJob = () => {
     }
   };
 
-  useEffect(() => {
-    fetchJobs();
+  React.useEffect(() => {
+    fetchJob();
   }, []);
 
   return (
     jobData && (
       <div>
-        <div className='flex justify-between items-center'>
-          <PageTitle title='Edit Job Post' />
-          <Button type='default' onClick={() => router.back()}>
+        <div className="flex justify-between items-center">
+          <PageTitle title="Edit Job Post" />
+          <Button type="default" onClick={() => router.back()}>
             Back
           </Button>
         </div>
 
-        <Form layout='vertical' onFinish={onFinish} initialValues={jobData}>
+        <Form layout="vertical" onFinish={onFinish} initialValues={jobData}>
           <JobPostForm />
 
-          <div className='flex justify-end items-center gap-3 my-3'>
-            <Button type='default' onClick={() => router.back()}>
+          <div className="flex justify-end items-center gap-3 my-3">
+            <Button type="default" onClick={() => router.back()}>
               Cancel
             </Button>
-            <Button type='primary' htmlType='submit'>
+            <Button type="primary" htmlType="submit">
               Update Job
             </Button>
           </div>
@@ -71,6 +71,6 @@ const EditJob = () => {
       </div>
     )
   );
-};
+}
 
 export default EditJob;

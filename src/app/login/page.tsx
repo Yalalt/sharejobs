@@ -28,7 +28,7 @@ function Login() {
   return (
     <div className='flex justify-center h-screen items-center bg-primary'>
       <div className='card p-5 w-450'>
-        <h1 className='text-xl'>Share Jobs - Login</h1>
+        <h1 className='text-xl'>ShareJobs - Login</h1>
         <hr />
 
         <Form layout='vertical' className='flex flex-col gap-5' onFinish={onFinish}>

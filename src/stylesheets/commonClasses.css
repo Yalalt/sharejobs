@@ -239,3 +239,12 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.info {
+  background-color: rgb(0, 103, 69);
+  color: white;
+}
+
+.underline {
+  text-decoration: underline;
+}

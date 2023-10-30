@@ -9,12 +9,12 @@ const userSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: [true, 'Please enter your name'],
+      required: true,
       trim: true,
     },
     email: {
       type: String,
-      required: [true, 'Please enter your email'],
+      required: true,
       trim: true,
       unique: true,
     },
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Please enter your password'],
+      required: true,
     },
     isAdmin: {
       type: Boolean,

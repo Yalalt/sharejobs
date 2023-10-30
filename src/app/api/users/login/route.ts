@@ -1,26 +1,25 @@
-import { connectDB } from '@/config/dbConfig';
-import { NextRequest, NextResponse } from 'next/server';
-import User from '@/models/userModel';
-import bcrypt from 'bcryptjs';
-import jwt, { Secret } from 'jsonwebtoken';
+import { connectDB } from "@/config/dbConfig";
+import { NextRequest, NextResponse } from "next/server";
+import User from "@/models/userModel";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 connectDB();
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const reqBody = await req.json();
+    const reqBody = await request.json();
 
     // check if user exists
     const user = await User.findOne({ email: reqBody.email });
     if (!user) {
-      throw new Error('User does not exists');
+      throw new Error("User does not exist");
     }
 
-    // compare password
+    // compare passwords
     const validPassword = await bcrypt.compare(reqBody.password, user.password);
-
     if (!validPassword) {
-      throw new Error('Invalid password');
+      throw new Error("Invalid password");
     }
 
     // create token
@@ -28,20 +27,19 @@ export async function POST(req: NextRequest) {
       userId: user._id,
       email: user.email,
     };
+    const token = jwt.sign(dataToBeSigned, process.env.jwt_secret!, {
+      expiresIn: "1d",
+    });
 
-    if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET not defined');
+    const response = NextResponse.json(
+      { message: "Login successful" },
+      { status: 200 }
+    );
 
-    const token = jwt.sign(dataToBeSigned, process.env.JWT_SECRET as Secret, { expiresIn: '1d' });
-
-    const response = NextResponse.json({ message: 'User login successful', success: true }, { status: 200 });
-
-    // Set cookie
-    response.cookies.set('__session-sharejobs', token, {
+    // set cookie
+    response.cookies.set("token", token, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 1000, // 1 day
-      path: '/',
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
     });
 
     return response;

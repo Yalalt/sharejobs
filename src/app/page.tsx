@@ -1,15 +1,15 @@
 'use client';
+import Divider from '@/components/Divider';
 import { SetLoading } from '@/redux/loadersSlice';
-import { Col, Divider, Row, message } from 'antd';
+import { Col, Row, message } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export default async function Home() {
   const router = useRouter();
   const [jobs = [], setJobs] = useState([]);
-  const { currentUser } = useSelector((state: any) => state.users);
   const dispatch = useDispatch();
 
   const fetchJobs = async () => {
@@ -17,10 +17,7 @@ export default async function Home() {
       dispatch(SetLoading(true));
 
       const response = await axios.get(`/api/jobs`);
-
       setJobs(response.data.data);
-
-      console.log(response.data.data);
     } catch (error: any) {
       message.error(error.message);
     } finally {

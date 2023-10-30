@@ -11,10 +11,10 @@ function Register() {
   const onFinish = async (values: any) => {
     try {
       dispatch(SetLoading(true));
-      const response = await axios.post("/api/users/register", values);
+      const response = await axios.post('/api/users/register', values);
       message.success(response.data.message);
     } catch (error: any) {
-      message.error(error.response.data.message || "Aldaa - Something went wrong.");
+      message.error(error.response.data.message || 'Aldaa - Something went wrong.');
     } finally {
       dispatch(SetLoading(false));
     }
@@ -23,11 +23,10 @@ function Register() {
   return (
     <div className='flex justify-center h-screen items-center bg-primary'>
       <div className='card p-5 w-450'>
-        <h1 className='text-xl'>Share Jobs - Register</h1>
+        <h1 className='text-xl'>ShareJobs - Register</h1>
         <hr />
 
         <Form layout='vertical' className='flex flex-col gap-5' onFinish={onFinish}>
-    
           <Form.Item label='Register As' name='userType'>
             <Radio.Group>
               <Radio value='employer'>Employer</Radio>
@@ -37,7 +36,6 @@ function Register() {
           <Form.Item label='Name' name='name'>
             <input type='text' className='input' />
           </Form.Item>
-
           <Form.Item label='Email' name='email'>
             <input type='email' className='input' />
           </Form.Item>
@@ -47,7 +45,7 @@ function Register() {
           </Form.Item>
 
           <Button type='primary' htmlType='submit' block>
-            Save
+            Register
           </Button>
 
           <Link href='/login'>Already have an account? Login</Link>

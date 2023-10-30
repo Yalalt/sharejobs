@@ -5,11 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 connectDB();
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest, { params }: any) {
   try {
-    // select("-password") excludes the password field from the returned data
-    const userId = await validateJWT(request);
-    const user = await User.findById(userId).select("-password");
+    await validateJWT(request);
+    const user = await User.findById(params.userid).select("-password");
     if (!user) {
       throw new Error("No user found");
     }

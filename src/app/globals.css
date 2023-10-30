@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;500&display=swap");
 
 html,
 body {
@@ -9,8 +9,8 @@ body {
 }
 
 * {
+  font-family: "Montserrat", sans-serif !important;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif !important;
 }
 
 input,
@@ -18,8 +18,9 @@ textarea,
 select {
   height: 45px;
   width: 100%;
-  border: 1px solid #6c6c6c;
+  border: 1px solid #c6c6c6;
   padding-left: 15px !important;
+  border-radius: 2px;
 }
 
 input:focus,
@@ -59,7 +60,7 @@ a {
 }
 
 i {
-  font-size: 25px;
+  font-size: 22px;
   cursor: pointer;
 }
 
