@@ -14,7 +14,8 @@ body {
 }
 
 input,
-textarea {
+textarea,
+select {
   height: 45px;
   width: 100%;
   border: 1px solid #6c6c6c;
@@ -22,7 +23,8 @@ textarea {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   outline: none;
   border: 1px solid #353535;
 }
