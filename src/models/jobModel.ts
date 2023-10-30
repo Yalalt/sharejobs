@@ -36,7 +36,7 @@ const jobSchema = new mongoose.Schema(
       required: true,
     },
     experience: {
-      type: String,
+      type: Number,
       required: true,
     },
   },
@@ -46,7 +46,7 @@ const jobSchema = new mongoose.Schema(
 );
 
 // Delete old model
-if (mongoose.models.Job) {
+if (mongoose.models.jobs) {
     const jobModel = mongoose.model('jobs');
     mongoose.deleteModel(jobModel.modelName);
 }

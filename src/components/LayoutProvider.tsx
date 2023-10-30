@@ -52,7 +52,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       const isEmployer = response.data.data.userType === 'employer';
       
       if(isEmployer) {
-        const tempMenuItems = menuItems;
+        const tempMenuItems: any = menuItems;
         tempMenuItems[2].name = 'Posted Jobs';
         tempMenuItems[2].path = '/jobs';
         setMenuItems(tempMenuItems);
@@ -61,6 +61,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       dispatch(SetCurrentUser(response.data.data));
     } catch (error: any) {
       message.error(error.response.data.message || 'Something went wrong');
+      message.error('Please clear your cookies and try again');
     } finally {
       dispatch(SetLoading(false));
     }
@@ -69,7 +70,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   // Login and register page dont need to get current user
   // also loading to display loader component
   useEffect(() => {
-    if (pathName !== '/login' && pathName !== '/register' && !currentUser) {
+    if ((pathName !== '/login' && pathName !== '/register') && !currentUser) {
       getCurrentUser();
     }
   }, [pathName]);

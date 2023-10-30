@@ -228,9 +228,14 @@
   border-radius: 4px;
   box-shadow: 0 0 2px 0 rgba(81, 81, 81, 0.2);
   background-color: white;
+  border: 1px solid #d3d3d3;
 }
 
 .divider {
   border-bottom: 1px solid #e0e0e0;
   height: 1px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
