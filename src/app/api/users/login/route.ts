@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
 
     // compare passwords
     const validPassword = await bcrypt.compare(reqBody.password, user.password);
+    
     if (!validPassword) {
       throw new Error("Invalid password");
     }
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
       userId: user._id,
       email: user.email,
     };
-    const token = jwt.sign(dataToBeSigned, process.env.jwt_secret!, {
+    const token = jwt.sign(dataToBeSigned, process.env.JWT_SECRET!, {
       expiresIn: "1d",
     });
 
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
     );
 
     // set cookie
-    response.cookies.set("token", token, {
+    response.cookies.set("__session-sharejobs", token, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 1000, // 1 day
     });

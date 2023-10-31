@@ -1,14 +1,13 @@
 "use client";
-import PageTitle from "@/components/PageTitle";
-import { Button, Table, message } from "antd";
 import React from "react";
-import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { SetLoading } from "@/redux/loadersSlice";
 import moment from "moment";
-import { Tooltip } from "antd";
+import { useRouter } from "next/navigation";
+import { SetLoading } from "@/redux/loadersSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Table, message, Tooltip } from "antd";
 import Applications from "@/components/Applications";
+import PageTitle from "@/components/PageTitle";
 
 function Jobs() {
   const [selectedJob = {}, setSelectedJob] = React.useState({} as any);
