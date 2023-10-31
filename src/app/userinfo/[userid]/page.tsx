@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { SetLoading } from "@/redux/loadersSlice";
 import axios from "axios";
@@ -13,7 +13,6 @@ function UserInfo() {
   const [userInfo, setUserInfo] = React.useState<any>(null);
   const { userid } = useParams();
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const fetchUserInfo = async () => {
     try {

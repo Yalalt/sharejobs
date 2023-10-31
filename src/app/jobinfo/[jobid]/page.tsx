@@ -2,8 +2,7 @@
 import React from "react";
 import { useRouter, useParams } from "next/navigation";
 import PageTitle from "@/components/PageTitle";
-import { Button, Col, Divider, Form, Row, message } from "antd";
-import JobPostForm from "@/components/JobPostForm";
+import { Button, Col, Divider, Row, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { SetLoading } from "@/redux/loadersSlice";
@@ -104,7 +103,8 @@ function JobInfo() {
             <span>{jobData.description}</span>
             {applications.length > 0 && (
               <span className="my-3 info p-3">
-                You have already applied for this job. You can only apply once, Please wait for the employer to respond.
+                You have already applied for this job. Please wait for the
+                employer to respond.
               </span>
             )}
             <div className="flex justify-end gap-3">

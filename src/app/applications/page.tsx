@@ -12,7 +12,6 @@ function Applications() {
   const [applications, setApplications] = React.useState([]);
   const { currentUser } = useSelector((state: any) => state.users);
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const fetchApplications = async () => {
     try {

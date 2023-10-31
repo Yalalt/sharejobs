@@ -12,7 +12,7 @@ import PageTitle from "@/components/PageTitle";
 function Jobs() {
   const [selectedJob = {}, setSelectedJob] = React.useState({} as any);
   const [showApplications = false, setShowApplications] =
-    React.useState<boolean>(false); // [1
+    React.useState<boolean>(false);
   const [jobs, setJobs] = React.useState([]);
   const { currentUser } = useSelector((state: any) => state.users);
   const dispatch = useDispatch();
