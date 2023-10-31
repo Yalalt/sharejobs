@@ -39,7 +39,7 @@ const EmployeeForm = () => {
         <h1 className='text-md'>
           Education
         </h1>
-        <Form.List name='educations'>
+        <Form.List name='education'>
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (

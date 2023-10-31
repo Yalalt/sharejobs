@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 export default async function Home() {
+  const [filters, setFilters] = useState({});
   const router = useRouter();
   const [jobs = [], setJobs] = useState([]);
   const dispatch = useDispatch();

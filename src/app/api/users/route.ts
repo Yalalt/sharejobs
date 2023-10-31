@@ -13,6 +13,7 @@ export async function PUT(request: NextRequest) {
     const updateUser = await User.findByIdAndUpdate(reqBody._id, reqBody, {
       new: true,
     }).select('-password');
+    
     if (!updateUser) {
       throw new Error('No user found');
     }

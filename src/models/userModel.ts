@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
       type: [],
       required: false,
     },
-    educations: {
+    education: {
       type: [],
       required: false,
     },

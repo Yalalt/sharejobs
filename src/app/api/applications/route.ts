@@ -1,4 +1,5 @@
 import { connectDB } from "@/config/dbConfig";
+import { sendEmail } from "@/helpers/sendEmail";
 import { validateJWT } from "@/helpers/validateJWT";
 import Application from "@/models/applicationModel";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,7 +8,6 @@ connectDB();
 
 export async function POST(request: NextRequest) {
   try {
-    // validate JWT
     await validateJWT(request);
     const reqBody = await request.json();
     const application: any = await Application.create(reqBody);
@@ -20,6 +20,18 @@ export async function POST(request: NextRequest) {
           path: "user",
         },
       });
+
+    await sendEmail({
+      to: applicationData.job.user.email,
+      subject: "New application received",
+      text: `You have received a new application from ${applicationData.user.name}`,
+      html: `<div>
+      <p>You have received a new application from ${applicationData.user.name}</p>
+      <p>Applicant's name is ${applicationData.user.name}</p>
+      <p>Applicant's email: ${applicationData.user.email}</p>
+      <p>Applicant's phone number: ${applicationData.user.phone}</p>
+      </div>`,
+    });
 
     return NextResponse.json({
       message: "You have successfully applied for this job",
@@ -40,7 +52,6 @@ export async function GET(request: NextRequest) {
     const user = searchParams.get("user");
     const job = searchParams.get("job");
 
-    // create filters object
     const filtersObject: any = {};
     if (user) {
       filtersObject["user"] = user;
@@ -50,7 +61,6 @@ export async function GET(request: NextRequest) {
       filtersObject["job"] = job;
     }
 
-    // fetch applications from db
     const applications = await Application.find(filtersObject)
       .populate("user")
       .populate({
